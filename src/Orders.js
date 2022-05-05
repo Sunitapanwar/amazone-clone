@@ -1,31 +1,35 @@
 import React, { useState, useEffect } from "react";
-import "./Orders.css";
 import { db } from "./firebase";
 import { useStateValue } from "./StateProvider";
+import Order from './Order'
+import './Orders.css'
 
 function Orders() {
-  const [{ user }, dispatch] = useStateValue();
-  const [orders, setOrders] = useState([]);
+  // const [orders, setOrders] = useState([]);
+  const [{ user, basket }, dispatch] = useStateValue();
 
-  useEffect(() => {
-    db.collection("users")
-      .doc(user?.uid)
-      .collection("orders")
-      .orderBy("created", "desc")
-      .onSnapshot((snap) => {
-        setOrders(
-          snap.docs.map((doc) => ({
-            id: doc.id,
-            data: doc.data(),
-          }))
-        );
-      });
-  }, []);
+  // useEffect(() => {
+  //   db.collection("users")
+  //     .doc(user?.uid)
+  //     .collection("orders")
+  //     .orderBy("created", "desc")
+  //     .onSnapshot((snap) => {
+  //       setOrders(
+  //         snap.docs.map((doc) => ({
+  //           id: doc.id,
+  //           data: doc.data(),
+  //         }))
+  //       );
+  //     });
+  // }, []);
 
   return (
     <div className="orders">
-      <h1>Your Orders</h1>
-    </div>
+          <h3 className="orders__heading">Your Orders is Sucessfully Done</h3>
+        <Order/>
+          
+          </div>
+  
   );
 }
 

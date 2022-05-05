@@ -1,0 +1,20 @@
+.order{
+    margin: 20px 300px 50px 300px;
+    background-color: rgb(242, 246, 247);
+   
+}
+.order__head{
+    margin-left: 20px;
+    margin-top: 5px;
+     
+}
+
+.order__item{
+    margin-left: 20px;
+}
+
+.order__total{
+    padding-bottom: 5px;
+    margin-right: 20px;
+    text-align: right;
+}

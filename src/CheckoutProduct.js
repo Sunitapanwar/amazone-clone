@@ -1,10 +1,10 @@
 import React from "react";
 import "./CheckoutProduct.css";
 import { useStateValue } from "./StateProvider";
-//import { ToastContainer, toast } from "react-toastify";
-//import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-function CheckoutProduct({ id, image, title, price, rating }) {
+function CheckoutProduct({ id, image, title, price, rating , hideButton}) {
   const [{ basket }, dispatch] = useStateValue();
 
   const removeFromBasket = () => {
@@ -27,11 +27,14 @@ function CheckoutProduct({ id, image, title, price, rating }) {
         <p className="checkoutProduct__rating">
           {Array(rating)
             .fill()
-            .map((rate) => (
+            .map((_, i) => (
               <p>⭐</p>
             ))}
         </p>
-        <button onClick={removeFromBasket}>Remove from basket</button>
+        {!hideButton && (
+          <button onClick={removeFromBasket}>Remove from basket</button>
+        )}
+        
       </div>
     </div>
   );

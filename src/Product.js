@@ -1,6 +1,8 @@
 import React from "react";
 import "./Product.css";
 import {useStateValue} from './StateProvider';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Product({ id, title, image, price, rating }) {
   const [{basket}, dispatch] = useStateValue();
@@ -16,6 +18,7 @@ function Product({ id, title, image, price, rating }) {
         rating: rating,
       },
     });
+    toast("Added item to basket!");
   }
   return (
     <div className="product">

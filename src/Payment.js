@@ -8,6 +8,8 @@ import CurrencyFormat from "react-currency-format";
 import { getBasketTotal } from "./reducer";
 import axios from "./axios";
 import { db } from "./firebase";
+import Subtotal from "./Subtotal";
+
 
 function Payment() {
   const history = useHistory();
@@ -41,34 +43,39 @@ function Payment() {
     setProcessing(true);
 
     const payload = await stripe
-      .confirmCardPayment("pi_3KvOKZSHkPcVBw7L1RYVphiJ_secret_o797g0g9lzfyBEbbN3xGKTzjn", {
-        payment_method: {
-          type: 'card',
-          card: elements.getElement(CardElement),
-        },
-      })
+      .confirmCardPayment(
+        "pi_3KvOKZSHkPcVBw7L1RYVphiJ_secret_o797g0g9lzfyBEbbN3xGKTzjn",
+        {
+          payment_method: {
+            type: "card",
+            card: elements.getElement(CardElement),
+          },
+        }
+      )
       .then(({ paymentIntent }) => {
-        // Payment Intent is Payment Confirmation
+       
+          //Payment Intent is Payment Confirmation
 
-        db.collection("users")
-          .doc(user?.uid)
-          .collection("orders")
-          .doc(paymentIntent.id)
-          .set({
-            basket,
-            amount: paymentIntent.amount,
-            created: paymentIntent.created,
+          // db.collection("users")
+          //   .doc(user?.uid)
+          //   .collection("orders")
+          //   .doc(paymentIntent.id)
+          //   .set({
+          //     basket,
+          //     amount: paymentIntent.amount,
+          //     created: paymentIntent.created,
+          //   });
+
+          setSucceeded(true);
+          setError(null);
+          setProcessing(false);
+
+          dispatch({
+            type: "EMPTY_BASKET",
           });
 
-        setSucceeded(true);
-        setError(null);
-        setProcessing(false);
-
-        dispatch({
-          type: "EMPTY_BASKET",
-        });
-
-        history.replace("/orders");
+          history.replace("/orders");
+        
       });
   };
 
@@ -117,7 +124,7 @@ function Payment() {
           <div className="payment__details">
             {/* Stripe magic goes here */}
             <form onSubmit={handleSubmit}>
-              <CardElement onChange={handleChange} />
+              {/* <CardElement onChange={handleChange} /> */}
               <div className="payment__priceContainer">
                 <CurrencyFormat
                   renderText={(value) => <h3>Order Total: {value}</h3>}
@@ -127,12 +134,14 @@ function Payment() {
                   thousandSeperator={true}
                   prefix="$"
                 />
-                <button disabled={processing || disabled || succeeded}>
+                {/* <button disabled={processing || disabled || succeeded}>
                   <span>{processing ? <p>Processing</p> : "Buy Now"}</span>
-                </button>
+                </button> */}
+                <button className="confirm__order" onClick={e=> history.push('/orders')}>Confirm Your Order</button>
               </div>
               {error && <div>error</div>}
             </form>
+         
           </div>
         </div>
       </div>

@@ -10,7 +10,7 @@ import { useStateValue } from "./StateProvider";
 import Payment from "./Payment";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-//import { ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import Orders from "./Orders";
 
 const promise = loadStripe
@@ -63,6 +63,7 @@ function App() {
           </Route>
         </Switch>
       </div>
+      <ToastContainer style={{ marginTop: "45px" }} />
     </Router>
   );
 }
